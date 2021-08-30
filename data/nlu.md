@@ -106,13 +106,21 @@
 - [delhi](location)
 - please find me a restaurant in [ahmedabad](location)
 - please show me a few [italian](cuisine:Italian) restaurants in [bangalore](location)
-
+- [Valentina_Lyon4520@gmail.com](email)
+- [Gwen_Roman7613@joiniaa.com](email)
+- [Ruth_Vollans4025@qater.org](email)
 ## synonym:4
 - four
 
-## synonym:Delhi
-- New Delhi
+## synonym:mumbai
+- bombay
+
+## synonym:New Delhi
+- Delhi
 - Dilli
+- deli
+## synonym:chennai
+ - madras
 
 ## synonym:bangalore
 - Bengaluru
@@ -137,4 +145,4 @@
 - [0-9]{6}
 
 ## regex:email
--  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.
+-  [A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}

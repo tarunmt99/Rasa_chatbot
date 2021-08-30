@@ -10,7 +10,7 @@ entities:
 - location
 - budget
 - people
-- mail_id
+- email
 slots:
   cuisine:
     type: text
@@ -31,9 +31,9 @@ slots:
   restaurant_avail:
     type: bool
     influence_conversation: true  
-  mail_id: 
+  email: 
     type: text
-
+    influence_conversation: true
 responses:
   utter_ask_cuisine:
   - buttons:
@@ -61,6 +61,8 @@ responses:
     text: What price range are you looking at?
   utter_ask_howcanhelp:
   - text: how can I help you?
+  utter_ask_email:
+  - text: Please provide a vaild email address
   utter_ask_location:
   - text: In which location?
   utter_default:
@@ -89,3 +91,5 @@ actions:
 - utter_donotoperate
 - utter_ask_budget
 - utter_sendemail
+- utter_ask_email
+- action_restart

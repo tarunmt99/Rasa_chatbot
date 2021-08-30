@@ -1,10 +1,13 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
+from logging import NullHandler
+from typing import Any, Dict, List, Text
 from pandas.core.frame import DataFrame
 
 from rasa_sdk import Action
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import AllSlotsReset, SlotSet
+from rasa_sdk.interfaces import Tracker
 from send_email import sendmail
 import pandas as pd
 import json
@@ -44,28 +47,44 @@ class ActionSearchRestaurants(Action):
 		cuisine = tracker.get_slot('cuisine')
 		budget = tracker.get_slot('budget')
 		results = RestaurantSearch(City=loc,Cuisine=cuisine,budget=budget)
+		
 		response=""
 		if results.shape[0] == 0:
 			res_avail=False
 			response= "no results"
 		else:
-			res_avail=True			
+			res_avail=True		
+			size:int = 5 if 5< results.shape[0] else results.shape[0]	
+			response= F"Found below top {size} restaurants \n"
 			for restaurant in results.iloc[:5].iterrows():
 				restaurant = restaurant[1]
-				response=response + F"Found below top 5 restaurants \n {restaurant['Restaurant Name']} in {restaurant['Address']} rated {restaurant['Aggregate rating']} with avg cost {restaurant['Average Cost for two']} \n\n"
+				response=response + F"{restaurant['Restaurant Name']} in {restaurant['Address']} rated {restaurant['Aggregate rating']} with avg cost {restaurant['Average Cost for two']} \n\n"
 				
 		dispatcher.utter_message("-----"+response)
 		return [SlotSet('location',loc),SlotSet('restaurant_avail',res_avail)]
+
+class ActionRestart(Action):
+
+  def name(self) -> Text:
+      return "action_restart"
+
+  async def run(self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+	   return [...]
 
 class ActionSendMail(Action):
 	def name(self):
 		return 'action_send_mail'
 
 	def run(self, dispatcher, tracker, domain):
-		MailID = tracker.get_slot('mail_id')
-		response = ""
-		sendmail(MailID,response)
-		return [SlotSet('mail_id',MailID)]
+		MailID = tracker.get_slot('email')
+		loc = tracker.get_slot('location')
+		cuisine = tracker.get_slot('cuisine')
+		budget = tracker.get_slot('budget')
+		results = RestaurantSearch(City=loc,Cuisine=cuisine,budget=budget)
+		print(MailID)
+		response = sendmail(MailID,results)
+		dispatcher.utter_message("-----"+response)
+		return [AllSlotsReset()]
 
 	
 

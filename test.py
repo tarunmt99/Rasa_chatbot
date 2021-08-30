@@ -1,3 +1,4 @@
+from send_email import sendmail
 import pandas as pd
 
 ZomatoData = pd.read_csv('zomato.csv',encoding='latin1')
@@ -10,8 +11,5 @@ TEMP = ZomatoData[(ZomatoData['Cuisines'].apply(lambda x: Cuisine.lower() in x.l
 r = TEMP[['Restaurant Name','Address','Average Cost for two','Aggregate rating']].sort_values(by=['Aggregate rating'], ascending=False).loc[lambda TEMP: TEMP['Average Cost for two'] < 2000.0].loc[lambda TEMP: TEMP['Average Cost for two'] > 300.0]
 #print(TEMP['Aggregate rating'].describe)
 print(r)
-loc = "ranchi"
-if City.lower() in (string.lower() for string in WeOperate):
-	print(True)
-else:
-    print(False)
+
+sendmail("tarun.mt99@gmail.com",TEMP)
