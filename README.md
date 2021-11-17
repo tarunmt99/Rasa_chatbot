@@ -18,6 +18,7 @@ To run the chatbot in the interactive mode below 2 commands shoule be run in two
  
  
 Problem Statement
+
 An Indian startup named 'Foodie' wants to build a conversational bot (chatbot) which can help users discover restaurants across several Indian cities. You have been hired as the lead data scientist for creating this product.
 
  
